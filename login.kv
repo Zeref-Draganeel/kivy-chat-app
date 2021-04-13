@@ -1,51 +1,119 @@
 #:kivy 2.0.0
 #:import window kivy.core.window.Window
 
+<SignUpScreen>:
+    name: "SignUpScreen"
+
+    GridLayout:
+        Label:
+            font_size: 35
+            text: "Create an account"
+            color: root.fgcolor
+            center_x: root.width / 2
+            center_y: 5 * root.height / 6
+        Label:
+            font_size: 25
+            text: "Username"
+            color: root.fgcolor
+            center_x: root.width / 4
+            center_y: 4 * root.height / 6
+        TextInput:
+            width: root.width / 3
+            height: root.height / 10
+            center_x: 2 * root.width / 3
+            center_y: 4 * root.height / 6
+        Label:
+            font_size: 25
+            text: "Password"
+            color: root.fgcolor
+            center_x: root.width / 4
+            center_y: 3 * root.height / 6
+        TextInput:
+            width: root.width / 3
+            height: root.height / 10
+            center_x: 2 * root.width / 3
+            center_y: 3 * root.height / 6
+        Label:
+            text: "Confirm Password"
+            color: root.fgcolor
+            font_size: 25
+            center_x: root.width / 4
+            center_y: 2 * root.height / 6
+        TextInput:
+            width: root.width / 3
+            height: root.height / 10
+            center_x: 2 * root.width / 3
+            center_y: 2 * root.height / 6
+        Button:
+            text: "Sign Up"
+            font_size: 35
+            background_color: root.bgcolor
+            foreground_color: root.fgcolor
+            width: 4 * root.width / 5
+            height: root.height / 8
+            center_x: root.width / 2
+            center_y: root.height / 6
+        Button:
+            text: "Already have account?"
+            font_size: 25
+            background_color: root.bgcolor[:-1]+[0.0]
+            foreground_color: root.fgcolor
+            center_x: root.width / 2
+            center_y: root.height / 20
+            on_release:
+                app.root.current = "LoginScreen"
+                root.manager.transition.direction = "right"
+                app.title = "Login"
+
 <LoginScreen>:
-    Label:
-        font_size: 35
-        text: "Create an account"
-        color: root.fgcolor
-        center_x: root.width / 2
-        center_y: 5 * root.height / 6
-    Label:
-        font_size: 25
-        text: "Username"
-        color: root.fgcolor
-        center_x: root.width / 4
-        center_y: 4 * root.height / 6
-    TextInput:
-        width: root.width / 3
-        height: root.height / 10
-        center_x: 2 * root.width / 3
-        center_y: 4 * root.height / 6
-    Label:
-        font_size: 25
-        text: "Password"
-        color: root.fgcolor
-        center_x: root.width / 4
-        center_y: 3 * root.height / 6
-    TextInput:
-        width: root.width / 3
-        height: root.height / 10
-        center_x: 2 * root.width / 3
-        center_y: 3 * root.height / 6
-    Label:
-        text: "Confirm Password"
-        color: root.fgcolor
-        font_size: 25
-        center_x: root.width / 4
-        center_y: 2 * root.height / 6
-    TextInput:
-        width: root.width / 3
-        height: root.height / 10
-        center_x: 2 * root.width / 3
-        center_y: 2 * root.height / 6
-    Button:
-        text: "Sign Up"
-        font_size: 35
-        background_color: root.bgcolor
-        foreground_color: root.fgcolor
-        width: 4 * root.width / 5
-        center_x: root.width / 2
-        center_y: 100
+    name: "LoginScreen"
+
+    GridLayout:
+        Label:
+            font_size: 35
+            text: "Login"
+            color: root.fgcolor
+            center_x: root.width / 2
+            center_y: 5 * root.height / 6
+        Label:
+            font_size: 25
+            text: "Username"
+            color: root.fgcolor
+            center_x: root.width / 4
+            center_y: 4 * root.height / 6
+        TextInput:
+            width: root.width / 3
+            height: root.height / 10
+            center_x: 2 * root.width / 3
+            center_y: 4 * root.height / 6
+        Label:
+            font_size: 25
+            text: "Password"
+            color: root.fgcolor
+            center_x: root.width / 4
+            center_y: 3 * root.height / 6
+        TextInput:
+            width: root.width / 3
+            height: root.height / 10
+            center_x: 2 * root.width / 3
+            center_y: 3 * root.height / 6
+        Button:
+            text: "Sign Up"
+            font_size: 35
+            background_color: root.bgcolor
+            foreground_color: root.fgcolor
+            width: 4 * root.width / 5
+            height: root.height / 8
+            center_x: root.width / 2
+            center_y: root.height / 3
+        Button:
+            text: "No Account?"
+            font_size: 25
+            background_color: root.bgcolor[:-1]+[0.0]
+            foreground_color: root.fgcolor
+            center_x: root.width / 2
+            center_y: root.height / 5
+            on_release:
+                app.root.current = "SignUpScreen"
+                root.manager.transition.direction = "left"
+                app.title = "Sign Up"
