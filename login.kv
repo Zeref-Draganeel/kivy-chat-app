@@ -1,0 +1,51 @@
+#:kivy 2.0.0
+#:import window kivy.core.window.Window
+
+<LoginScreen>:
+    Label:
+        font_size: 35
+        text: "Create an account"
+        color: root.fgcolor
+        center_x: root.width / 2
+        center_y: 5 * root.height / 6
+    Label:
+        font_size: 25
+        text: "Username"
+        color: root.fgcolor
+        center_x: root.width / 4
+        center_y: 4 * root.height / 6
+    TextInput:
+        width: root.width / 3
+        height: root.height / 10
+        center_x: 2 * root.width / 3
+        center_y: 4 * root.height / 6
+    Label:
+        font_size: 25
+        text: "Password"
+        color: root.fgcolor
+        center_x: root.width / 4
+        center_y: 3 * root.height / 6
+    TextInput:
+        width: root.width / 3
+        height: root.height / 10
+        center_x: 2 * root.width / 3
+        center_y: 3 * root.height / 6
+    Label:
+        text: "Confirm Password"
+        color: root.fgcolor
+        font_size: 25
+        center_x: root.width / 4
+        center_y: 2 * root.height / 6
+    TextInput:
+        width: root.width / 3
+        height: root.height / 10
+        center_x: 2 * root.width / 3
+        center_y: 2 * root.height / 6
+    Button:
+        text: "Sign Up"
+        font_size: 35
+        background_color: root.bgcolor
+        foreground_color: root.fgcolor
+        width: 4 * root.width / 5
+        center_x: root.width / 2
+        center_y: 100
