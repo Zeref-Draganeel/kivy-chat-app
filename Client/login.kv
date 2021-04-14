@@ -3,6 +3,7 @@
 
 <SignUpScreen>:
     name: "SignUpScreen"
+    title: 'SignUp'
 
     GridLayout:
         Label:
@@ -53,11 +54,14 @@
             height: root.height / 8
             center_x: root.width / 2
             center_y: root.height / 6
+            on_press: root.sign_up()
         Button:
+            markup: True
             text: "Already have account?"
             font_size: 25
             background_color: root.bgcolor[:-1]+[0.0]
-            foreground_color: root.fgcolor
+            foreground_color: root.fgcolor[:-1]+[0.0]
+            width: root.width / 2
             center_x: root.width / 2
             center_y: root.height / 20
             on_release:
@@ -67,6 +71,7 @@
 
 <LoginScreen>:
     name: "LoginScreen"
+    title: "Login"
 
     GridLayout:
         Label:
@@ -98,7 +103,7 @@
             center_x: 2 * root.width / 3
             center_y: 3 * root.height / 6
         Button:
-            text: "Sign Up"
+            text: "Login"
             font_size: 35
             background_color: root.bgcolor
             foreground_color: root.fgcolor
@@ -106,11 +111,14 @@
             height: root.height / 8
             center_x: root.width / 2
             center_y: root.height / 3
+            on_press: root.login()
         Button:
+            markup: True
             text: "No Account?"
             font_size: 25
             background_color: root.bgcolor[:-1]+[0.0]
-            foreground_color: root.fgcolor
+            foreground_color: root.fgcolor[:-1]+[0.0]
+            width: root.width / 2
             center_x: root.width / 2
             center_y: root.height / 5
             on_release:

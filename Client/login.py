@@ -18,11 +18,34 @@ class SignUpScreen(Screen):
     fgcolor = FG_Color
     bgcolor = BG_Color
 
+    def sign_up(self):
+        children = self.children[0].children[::-1]
+        username_input = children[2].text
+        password_input = children[4].text
+        cpassword_input = children[6].text
+
+        if not username_input or not password_input or not cpassword_input:
+            children[8].text = "Already have account? [color=0000ff]You should fill all the details[/color]"
+        elif password_input == cpassword_input:
+            children[8].text = "Already have account? [color=0000ff]Ok[/color]"
+        else:
+            children[8].text = "Already have account? [color=0000ff]Passwords dont match[/color]"
+
 
 class LoginScreen(Screen):
     fgcolor = FG_Color
     bgcolor = BG_Color
 
+    def login(self):
+        children = self.children[0].children[::-1]
+        username_input = children[2].text
+        password_input = children[4].text
+
+        if not username_input or not password_input:
+            children[6].text = "No Account? [color=0000ff]You should fill all the details[/color]"
+        else:
+
+            children[6].text = "No Account? [color=0000ff]Ok[/color]"
 
 screen = ""
 
