@@ -6,12 +6,21 @@ from kivy.properties import ColorProperty
 from kivy.utils import get_random_color
 
 # Window.clearcolor = get_random_color()
+from Client.client import Client
+
 Window.clearcolor = [.59765625, .859375, .79296875, 1.]
 
 FG_Color = ColorProperty(list(map(
     lambda x: min(x + 0.5, 1) if max(Window.clearcolor[:-1]) < 0.5 else max(x - 0.5, 0) if max(
         Window.clearcolor[:-1]) > 0.5 else x, Window.clearcolor[:-1])) + [1.0])
 BG_Color = ColorProperty(Window.clearcolor)
+
+network = Client()
+
+
+class MainScreen(Screen):
+    fgcolor = FG_Color
+    bgcolor = BG_Color
 
 
 class SignUpScreen(Screen):
@@ -27,7 +36,16 @@ class SignUpScreen(Screen):
         if not username_input or not password_input or not cpassword_input:
             children[8].text = "Already have account? [color=0000ff]You should fill all the details[/color]"
         elif password_input == cpassword_input:
-            children[8].text = "Already have account? [color=0000ff]Ok[/color]"
+            cred = {
+                "username": username_input,
+                "password": password_input
+            }
+            recv_data = network.post('signup', cred)
+            if recv_data.status_code == 200:
+                network.token = recv_data.json()["data"]["token"]
+                self.parent.current = "MainScreen"
+            elif recv_data.status_code == 401:
+                children[8].text = f"Already have account? [color=0000ff]{recv_data.json()['message']}[/color]"
         else:
             children[8].text = "Already have account? [color=0000ff]Passwords dont match[/color]"
 
@@ -44,8 +62,17 @@ class LoginScreen(Screen):
         if not username_input or not password_input:
             children[6].text = "No Account? [color=0000ff]You should fill all the details[/color]"
         else:
+            cred = {
+                "username": username_input,
+                "password": password_input
+            }
+            recv_data = network.post('login', cred)
+            if recv_data.status_code == 200:
+                network.token = recv_data.json()["data"]["token"]
+                self.parent.current = "MainScreen"
+            elif recv_data.status_code == 401:
+                children[6].text = f"No Account? [color=0000ff]{recv_data.json()['message']}[/color]"
 
-            children[6].text = "No Account? [color=0000ff]Ok[/color]"
 
 screen = ""
 
@@ -56,6 +83,7 @@ class LoginApp(App):
         screen = ScreenManager()
         screen.add_widget(LoginScreen(name = "LoginScreen"))
         screen.add_widget(SignUpScreen(name = "SignUpScreen"))
+        screen.add_widget(MainScreen(name = "MainScreen"))
         return screen
 
 
