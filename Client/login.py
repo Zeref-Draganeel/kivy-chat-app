@@ -5,10 +5,8 @@ from kivy.core.window import Window
 from kivy.properties import ColorProperty
 from kivy.utils import get_random_color
 
-# Window.clearcolor = get_random_color()
+Window.clearcolor = get_random_color()
 from Client.client import Client
-
-Window.clearcolor = [.59765625, .859375, .79296875, 1.]
 
 FG_Color = ColorProperty(list(map(
     lambda x: min(x + 0.5, 1) if max(Window.clearcolor[:-1]) < 0.5 else max(x - 0.5, 0) if max(
