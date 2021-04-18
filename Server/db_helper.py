@@ -1,6 +1,5 @@
 import contextlib
 import sqlite3
-import traceback
 
 
 class con:
@@ -67,4 +66,4 @@ def get_message(messageid):
 
 def get_messages():
     with con as cur:
-        return cur.execute("SELECT * FROM Messages ORDER BY messageid DESC LIMIT 30;").fetchall()[::-1]
+        return cur.execute("SELECT * FROM Messages ORDER BY messageid DESC LIMIT 10;").fetchall()[::-1]

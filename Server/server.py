@@ -1,6 +1,5 @@
 import secrets
 import time
-import traceback
 
 import flask
 from flask import jsonify, request
@@ -51,11 +50,9 @@ def signup():
         token = Token(username)
         tokens[token.token] = token
         data = {
-            "message": "Created user",
             "data": {
                 "token": token.token,
-                "expires": token.expires,
-                "messages": get_messages()
+                "expires": token.expires
             }
         }
         return jsonify(data)
@@ -75,11 +72,9 @@ def login():
         token = Token(username)
         tokens[token.token] = token
         data = {
-            "message": "Logged in",
             "data": {
                 "token": token.token,
-                "expires": token.expires,
-                "messages": get_messages()
+                "expires": token.expires
             }
         }
         return jsonify(data)
@@ -100,7 +95,6 @@ def new_message():
         message = data['message']
         create_message(token.user, message)
         data = {
-            "message": "Created Message",
             "data": {
                 "message": message,
                 "user": token.user
@@ -108,7 +102,26 @@ def new_message():
         }
         return jsonify(data)
     except:
-        traceback.print_exc()
+        data = {"message": 'Invalid token'}
+        return jsonify(data), 401
+
+
+@app.route('/messages', methods = ['GET'])
+def messages():
+    try:
+        data = request.json
+        token = tokens[data['token']]
+        if token.expired:
+            del tokens[token.token]
+            data = {"message": "Expired token"}
+            return jsonify(data), 401
+        data = {
+            "data": {
+                "messages": get_messages(),
+            }
+        }
+        return jsonify(data)
+    except:
         data = {"message": 'Invalid token'}
         return jsonify(data), 401
 

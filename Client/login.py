@@ -1,4 +1,8 @@
+import re
+import time
+
 from kivy.app import App
+from kivy.clock import Clock
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.widget import Widget
 from kivy.core.window import Window
@@ -19,6 +23,26 @@ network = Client()
 class MainScreen(Screen):
     fgcolor = FG_Color
     bgcolor = BG_Color
+
+    def refresh(self, dt):
+        try:
+            if self.parent.current == "MainScreen":
+                network.messages = network.get('messages', {"token": network.token})['data']['messages']
+                children = self.children[0].children[::-1]
+                text = ''
+                for _, user, message in network.messages:
+                    text += user+': '
+                    text += f'\n{" "*(len(user)+6)}'.join(re.findall('.{1,25}', message, flags=re.S))
+                    text += '\n'
+                children[0].text = text
+        except:
+            pass
+
+    def send(self):
+        children = self.children[0].children[::-1]
+        text = children[1].text
+        network.post('new-message', {"token": network.token, "message": text})
+        children[1].text = ""
 
 
 class SignUpScreen(Screen):
@@ -81,7 +105,9 @@ class LoginApp(App):
         screen = ScreenManager()
         screen.add_widget(LoginScreen(name = "LoginScreen"))
         screen.add_widget(SignUpScreen(name = "SignUpScreen"))
-        screen.add_widget(MainScreen(name = "MainScreen"))
+        main = MainScreen(name = "MainScreen")
+        screen.add_widget(main)
+        Clock.schedule_interval(main.refresh, 0.10)
         return screen
 
 
